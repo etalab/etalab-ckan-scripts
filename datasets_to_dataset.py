@@ -52,6 +52,7 @@ log = logging.getLogger(app_name)
 def main():
     parser = argparse.ArgumentParser(description = __doc__)
     parser.add_argument('config', help = 'path of configuration file')
+    parser.add_argument('-d', '--delete', action = 'store_true', help = 'force datastore re-creation')
     parser.add_argument('-v', '--verbose', action = 'store_true', help = 'increase output verbosity')
 
     global args
@@ -140,7 +141,7 @@ def main():
         maintainer = u'Secrétariat général du Gouvernement',
         maintainer_email = u'bot@etalab2.fr',
         name = package_name,
-        notes = u"""Les jeux de données ouvertes collectées par la mission Etalab""",
+        notes = u"""Les jeux de données ouvertes collectés par la mission Etalab""",
         owner_org = organization['id'],
 #        relationships_as_object (list of relationship dictionaries) – see package_relationship_create() for the format of relationship dictionaries (optional)
 #        relationships_as_subject (list of relationship dictionaries) – see package_relationship_create() for the format of relationship dictionaries (optional)
@@ -288,67 +289,113 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
             conv.not_none,
             ))(response_dict['result'], state = conv.default_state)
 
-    datastore = dict(
-        fields = [
-            dict(id = 'author', type = 'text'),
-            dict(id = 'author_email', type = 'text'),
-            dict(id = 'extras', type = 'json'),
-            dict(id = 'groups', type = 'json'),
-            dict(id = 'id', type = 'text'),
-            dict(id = 'isopen', type = 'bool'),
-            dict(id = 'license_id', type = 'text'),
-            dict(id = 'license_title', type = 'text'),
-            dict(id = 'license_url', type = 'text'),
-            dict(id = 'maintainer', type = 'text'),
-            dict(id = 'maintainer_email', type = 'text'),
-            dict(id = 'metadata_created', type = 'date'),
-            dict(id = 'metadata_modified', type = 'date'),
-            dict(id = 'name', type = 'text'),
-            dict(id = 'notes', type = 'text'),
-            dict(id = 'num_resources', type = 'int'),
-            dict(id = 'num_tags', type = 'int'),
-            dict(id = 'organization', type = 'json'),
-            dict(id = 'owner_org', type = 'text'),
-            dict(id = 'private', type = 'bool'),
-            dict(id = 'relationships_as_object', type = 'json'),
-            dict(id = 'relationships_as_subject', type = 'json'),
-            dict(id = 'resources', type = 'json'),
-            dict(id = 'revision_id', type = 'text'),
-            dict(id = 'revision_timestamp', type = 'timestamp'),
-            dict(id = 'state', type = 'text'),
-            dict(id = 'tags', type = 'json'),
-            dict(id = 'territorial_coverage', type = 'text'),
-            dict(id = 'territorial_coverage_granularity', type = 'text'),
-            dict(id = 'title', type = 'text'),
-            dict(id = 'tracking_summary', type = 'json'),
-            dict(id = 'type', type = 'text'),
-            dict(id = 'url', type = 'text'),
-            dict(id = 'version', type = 'text'),
-            ],
-        primary_key = 'id',
-        resource_id = resource['id'],
-        )
-    request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_create'),
-        headers = ckan_headers)
-    try:
-        response = urllib2.urlopen(request, urllib.quote(json.dumps(datastore)))
-    except urllib2.HTTPError as response:
-        response_text = response.read()
+    if args.delete:
+        request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_delete'),
+            headers = ckan_headers)
         try:
-            response_dict = json.loads(response_text)
-        except ValueError:
-            log.error(u'An exception occured while creating datastore: {0}'.format(datastore))
-            log.error(response_text)
+            response = urllib2.urlopen(request, urllib.quote(json.dumps(dict(
+                resource_id = resource['id'],
+                ))))
+        except urllib2.HTTPError as response:
+            response_text = response.read()
+            try:
+                response_dict = json.loads(response_text)
+            except ValueError:
+                log.error(u'An exception occured while deleting datastore: {0}'.format(resource['id']))
+                log.error(response_text)
+                raise
+            for key, value in response_dict.iteritems():
+                print '{} = {}'.format(key, value)
             raise
-        for key, value in response_dict.iteritems():
-            print '{} = {}'.format(key, value)
-        raise
-    assert response.code == 200
-    response_dict = json.loads(response.read())
-    datastore = conv.check(conv.pipe(
-        conv.make_ckan_json_to_datastore(),
-        conv.not_none,
-        ))(response_dict['result'], state = conv.default_state)
+
+    for index in range(2):
+        datastore = dict(
+            fields = [
+                dict(id = 'author', type = 'text'),
+                dict(id = 'author_email', type = 'text'),
+                dict(id = 'ckan_url', type = 'text'),
+                dict(id = 'extras', type = 'json'),
+                dict(id = 'groups', type = 'json'),
+                dict(id = 'id', type = 'text'),
+                dict(id = 'isopen', type = 'bool'),
+                dict(id = 'license_id', type = 'text'),
+                dict(id = 'license_title', type = 'text'),
+                dict(id = 'license_url', type = 'text'),
+                dict(id = 'maintainer', type = 'text'),
+                dict(id = 'maintainer_email', type = 'text'),
+                dict(id = 'metadata_created', type = 'date'),
+                dict(id = 'metadata_modified', type = 'date'),
+                dict(id = 'name', type = 'text'),
+                dict(id = 'notes', type = 'text'),
+                dict(id = 'num_resources', type = 'int'),
+                dict(id = 'num_tags', type = 'int'),
+                dict(id = 'organization', type = 'json'),
+                dict(id = 'owner_org', type = 'text'),
+                dict(id = 'private', type = 'bool'),
+                dict(id = 'relationships_as_object', type = 'json'),
+                dict(id = 'relationships_as_subject', type = 'json'),
+                dict(id = 'resources', type = 'json'),
+                dict(id = 'revision_id', type = 'text'),
+                dict(id = 'revision_timestamp', type = 'timestamp'),
+                dict(id = 'state', type = 'text'),
+                dict(id = 'tags', type = 'json'),
+#                dict(id = 'temporal_coverage_from', type = 'date'),
+                dict(id = 'temporal_coverage_from', type = 'text'),
+#                dict(id = 'temporal_coverage_to', type = 'date'),
+                dict(id = 'temporal_coverage_to', type = 'text'),
+                dict(id = 'territorial_coverage', type = 'text'),
+                dict(id = 'territorial_coverage_granularity', type = 'text'),
+                dict(id = 'title', type = 'text'),
+                dict(id = 'tracking_summary', type = 'json'),
+                dict(id = 'type', type = 'text'),
+                dict(id = 'url', type = 'text'),
+                dict(id = 'version', type = 'text'),
+                ],
+            primary_key = 'id',
+            resource_id = resource['id'],
+            )
+        request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_create'),
+            headers = ckan_headers)
+        try:
+            response = urllib2.urlopen(request, urllib.quote(json.dumps(datastore)))
+        except urllib2.HTTPError as response:
+            response_text = response.read()
+            try:
+                response_dict = json.loads(response_text)
+            except ValueError:
+                log.error(u'An exception occured while creating datastore: {0}'.format(datastore))
+                log.error(response_text)
+                raise
+            if response.code == 409 and index == 0:
+                # Conflict: The fields may have changed. Delete datastore and recreate it.
+                request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_delete'),
+                    headers = ckan_headers)
+                try:
+                    response = urllib2.urlopen(request, urllib.quote(json.dumps(dict(
+                        resource_id = resource['id'],
+                        ))))
+                except urllib2.HTTPError as response:
+                    response_text = response.read()
+                    try:
+                        response_dict = json.loads(response_text)
+                    except ValueError:
+                        log.error(u'An exception occured while deleting datastore: {0}'.format(resource['id']))
+                        log.error(response_text)
+                        raise
+                    for key, value in response_dict.iteritems():
+                        print '{} = {}'.format(key, value)
+                    raise
+                continue
+            for key, value in response_dict.iteritems():
+                print '{} = {}'.format(key, value)
+            raise
+        assert response.code == 200
+        response_dict = json.loads(response.read())
+        datastore = conv.check(conv.pipe(
+            conv.make_ckan_json_to_datastore(),
+            conv.not_none,
+            ))(response_dict['result'], state = conv.default_state)
+        break
 
     # Retrieve names of packages already existing in CKAN.
     request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/package_list'),
@@ -369,8 +416,9 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
             conv.make_ckan_json_to_package(drop_none_values = True),
             conv.not_none,
             ))(response_dict['result'], state = conv.default_state)
+        package['ckan_url'] = urlparse.urljoin(conf['ckan.site_url'], '/dataset/{}'.format(package['name']))
 
-        request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_upsert'), 
+        request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_upsert'),
             headers = ckan_headers)
         try:
             response = urllib2.urlopen(request, urllib.quote(json.dumps(dict(
@@ -383,7 +431,7 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
             try:
                 response_dict = json.loads(response_text)
             except ValueError:
-                log.error(u'An exception occured while creating datastore: {0}'.format(datastore))
+                log.error(u'An exception occured while upserting package in datastore: {0}'.format(package))
                 log.error(response_text)
                 raise
             for key, value in response_dict.iteritems():
