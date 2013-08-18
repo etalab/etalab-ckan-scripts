@@ -33,7 +33,6 @@ import datetime
 import json
 import logging
 import os
-import pprint
 import sys
 import urllib
 import urllib2
@@ -101,7 +100,6 @@ def main():
 
     package_title = u'Jeux de données de data.gouv.fr'
     package_name = strings.slugify(package_title)
-
 
     # Try to retrieve exising package, to ensure that its resources will not be destroyed by package_update.
     request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'],
@@ -416,6 +414,7 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
             conv.make_ckan_json_to_package(drop_none_values = True),
             conv.not_none,
             ))(response_dict['result'], state = conv.default_state)
+        assert package.get('ckan_url') is None, package
         package['ckan_url'] = urlparse.urljoin(conf['ckan.site_url'], '/dataset/{}'.format(package['name']))
 
         request = urllib2.Request(urlparse.urljoin(conf['ckan.site_url'], '/api/3/action/datastore_upsert'),
@@ -440,7 +439,7 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
         assert response.code == 200
         response_dict = json.loads(response.read())
         assert response_dict['success'] is True
-        upsert = response_dict['result']
+        # upsert = response_dict['result']
 
     return 0
 
