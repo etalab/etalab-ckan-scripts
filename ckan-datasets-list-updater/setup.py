@@ -41,6 +41,6 @@ setup(
     packages = [],
     entry_points = """
         [moksha.consumer]
-        ckan-datasets-list-updater = consumer:CkanDatasetsListUpdater
+        ckan-datasets-list-updater = consumers:CkanDatasetsListUpdater
         """,
     )
