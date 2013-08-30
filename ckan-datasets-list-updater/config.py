@@ -5,7 +5,7 @@
 # By: Emmanuel Raviart <emmanuel@raviart.com>
 #
 # Copyright (C) 2013 Emmanuel Raviart
-# http://gitorious.org/etalab/etalab-ckan-scripts
+# http://github.com/etalab/etalab-ckan-scripts
 #
 # This file is part of Etalab-CKAN-Scripts.
 #
@@ -27,7 +27,7 @@ config = {
     'ckan-datasets-list-updater': {
         'ckan.api_key': 'TODO',
         'ckan.site_url': 'http://localhost:5000/',
-        'user_agent': 'Etalab-CKAN-Scripts/0.1 (https://www.gitorious.org/etalab/etalab-to-ckan bot@etalab2.fr',
+        'user_agent': 'Etalab-CKAN-Scripts/0.1 (https://www.github.com/etalab/etalab-ckan-scripts)',
         },
     'ckan-datasets-list-updater.enabled': True,
     }
