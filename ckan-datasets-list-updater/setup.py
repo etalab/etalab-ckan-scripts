@@ -24,7 +24,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-"""Update the list of CKAN datasets in realtime by consuming fedmsg messages.."""
+"""Update the list of CKAN datasets in realtime by consuming fedmsg messages."""
 
 
 from setuptools import setup
