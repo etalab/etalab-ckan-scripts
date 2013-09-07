@@ -325,8 +325,6 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
                 dict(id = 'metadata_modified', type = 'date'),
                 dict(id = 'name', type = 'text'),
                 dict(id = 'notes', type = 'text'),
-                dict(id = 'num_resources', type = 'int'),
-                dict(id = 'num_tags', type = 'int'),
                 dict(id = 'organization', type = 'json'),
                 dict(id = 'owner_org', type = 'text'),
                 dict(id = 'private', type = 'bool'),
@@ -336,6 +334,8 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
                 dict(id = 'revision_id', type = 'text'),
                 dict(id = 'revision_timestamp', type = 'timestamp'),
                 dict(id = 'state', type = 'text'),
+                dict(id = 'supplier', type = 'json'),
+                dict(id = 'supplier_id', type = 'text'),
                 dict(id = 'tags', type = 'json'),
 #                dict(id = 'temporal_coverage_from', type = 'date'),
                 dict(id = 'temporal_coverage_from', type = 'text'),
@@ -413,6 +413,7 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
         package = conv.check(conv.pipe(
             conv.make_ckan_json_to_package(drop_none_values = True),
             conv.not_none,
+            conv.ckan_input_package_to_output_package,
             ))(response_dict['result'], state = conv.default_state)
         assert package.get('ckan_url') is None, package
         package['ckan_url'] = urlparse.urljoin(conf['ckan.site_url'], '/dataset/{}'.format(package['name']))
@@ -427,10 +428,10 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
                 ))))
         except urllib2.HTTPError as response:
             response_text = response.read()
+            log.error(u'An exception occured while upserting package in datastore: {0}'.format(package))
             try:
                 response_dict = json.loads(response_text)
             except ValueError:
-                log.error(u'An exception occured while upserting package in datastore: {0}'.format(package))
                 log.error(response_text)
                 raise
             for key, value in response_dict.iteritems():

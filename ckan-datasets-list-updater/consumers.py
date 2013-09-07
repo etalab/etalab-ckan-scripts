@@ -72,7 +72,6 @@ class CkanDatasetsListUpdater(fedmsg.consumers.FedmsgConsumer):
                         conv.not_none,
                         ),
                     },
-                default = 'drop',
                 ),
             conv.not_none,
             ))(hub.config.get('ckan-datasets-list-updater'), conv.default_state)
