@@ -401,7 +401,7 @@ Base de données générée automatiquement à partir du contenu de data.gouv.fr
     response = urllib2.urlopen(request)
     response_dict = json.loads(response.read())
     packages_name = conv.check(conv.pipe(
-        conv.ckan_json_to_package_list,
+        conv.ckan_json_to_name_list,
         conv.not_none,
         ))(response_dict['result'], state = conv.default_state)
 
