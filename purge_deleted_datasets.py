@@ -110,6 +110,28 @@ def main():
             log.exception(u'An integrity error while purging {} - {}'.format(name, title))
             bad_packages_name.append(name)
 
+    bad_resources_id = []
+    while True:
+        revision = model.repo.new_revision()
+
+        resource = model.Session.query(model.Resource).filter(
+            model.Resource.state == 'deleted',
+            sa.not_(model.Resource.id.in_(bad_resources_id)) if bad_resources_id else None,
+            ).first()
+        if resource is None:
+            break
+
+        id = resource.id
+        name = resource.name
+        resource.purge()
+        log.info(u'Purged resource {} - {}'.format(id, name))
+
+        try:
+            model.repo.commit_and_remove()
+        except sqlalchemy.exc.IntegrityError:
+            log.exception(u'An integrity error while purging {} - {}'.format(id, name))
+            bad_resources_id.append(id)
+
     return 0
 
 
