@@ -32,16 +32,31 @@ import logging
 import os
 import sys
 
+from ckan import model, plugins
+from ckan.config.environment import load_environment
 from paste.deploy import appconfig
+from paste.registry import Registry
 import pylons
 import sqlalchemy as sa
 import sqlalchemy.exc
-
-from ckan.config.environment import load_environment
+from sqlalchemy import sql
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
 log = logging.getLogger(app_name)
+
+
+class MockTranslator(object):
+    def gettext(self, value):
+        return value
+
+    def ugettext(self, value):
+        return value
+
+    def ungettext(self, singular, plural, n):
+        if n > 1:
+            return plural
+        return singular
 
 
 def main():
@@ -50,30 +65,44 @@ def main():
     parser.add_argument('-v', '--verbose', action = 'store_true', help = 'increase output verbosity')
 
     args = parser.parse_args()
-    logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
+#    logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
+    logging.basicConfig(level = logging.INFO if args.verbose else logging.WARNING, stream = sys.stdout)
     site_conf = appconfig('config:{}'.format(os.path.abspath(args.config)))
-    pylons.config = load_environment(site_conf.global_conf, site_conf.local_conf)
+    load_environment(site_conf.global_conf, site_conf.local_conf)
 
-    from ckan import model, plugins
+    registry = Registry()
+    registry.prepare()
+    registry.register(pylons.translator, MockTranslator())
+
+    plugins.load('synchronous_search')
 
     bad_packages_name = []
-    plugins.load('synchronous_search')
     while True:
         revision = model.repo.new_revision()
 
-        for package in model.Session.query(model.Package).filter(sa.and_(
-                model.Package.state == 'deleted',
-                sa.not_(model.Package.name.in_(bad_packages_name)) if bad_packages_name else None,
-                )):
-            name = package.name
-            title = package.title
+        package = model.Session.query(model.Package).filter(
+            model.Package.state == 'deleted',
+            sa.not_(model.Package.name.in_(bad_packages_name)) if bad_packages_name else None,
+            ).first()
+        if package is None:
+            break
 
-            package.purge()
-            print name, title
-            break
-        else:
-            # No more deleted packages to purge.
-            break
+        name = package.name
+        title = package.title
+
+        # Delete resource_revision before purging package, to avoid IntegrityError: update or delete on table
+        # "resource_group" violates foreign key constraint "resource_revision_resource_group_id_fkey" on table
+        # "resource_revision".
+        for resource_group in model.Session.query(model.ResourceGroup).filter(
+                model.ResourceGroup.package_id == package.id,
+                ):
+            for resource_revision in model.Session.query(model.ResourceRevision).filter(
+                    model.ResourceRevision.resource_group_id == resource_group.id,
+                    ):
+                model.Session.delete(resource_revision)
+
+        package.purge()
+        log.info(u'Purged package {} - {}'.format(name, title))
 
         try:
             model.repo.commit_and_remove()
