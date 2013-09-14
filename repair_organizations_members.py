@@ -76,23 +76,28 @@ def main():
     plugins.load('synchronous_search')
 
     revision = model.repo.new_revision()
+
     for package in model.Session.query(model.Package).filter(
             model.Package.owner_org != None,
-            model.Package.state == 'active',
+            model.Package.state != 'deleted',
             ):
-        owner = model.Session.query(model.Group).get(package.owner_org)
-        assert owner is not None
-        assert owner.is_organization
-        assert owner.state != 'deleted'
+        organization = model.Session.query(model.Group).get(package.owner_org)
+        if organization is None and package.state != 'active':
+            log.warning(u'Purging package "{}" whose organization is missing'.format(package.name))
+            package.purge()
+            continue
+        assert organization is not None
+        assert organization.is_organization
+        assert organization.state != 'deleted'
         member = model.Session.query(model.Member).filter(
-            model.Member.group_id == owner.id,
+            model.Member.group_id == organization.id,
             model.Member.state == 'active',
             model.Member.table_id == package.id,
             ).first()
         if member is None:
-            log.info(u'Repairing organization "{}" package "{}" membership'.format(owner.name, package.name))
+            log.warning(u'Repairing organization "{}" package "{}" membership'.format(organization.name, package.name))
             member = model.Session.query(model.Member).filter(
-                model.Member.group_id == owner.id,
+                model.Member.group_id == organization.id,
                 model.Member.table_id == package.id,
                 ).first()
             assert member is not None
@@ -102,10 +107,42 @@ def main():
             assert member.table_name == 'package'
         else:
             if member.capacity != 'organization':
-                log.warning(u'Repairing capacity organization "{}" package "{}" membership'.format(owner, package))
+                log.warning(u'Repairing capacity organization "{}" package "{}" membership'.format(organization, package))
                 member.capacity = 'organization'
             assert member.table_name == 'package'
             continue
+
+    for organization in model.Session.query(model.Group).filter(
+            model.Group.is_organization == True,
+            model.Group.state == 'active',
+            ):
+        for member in model.Session.query(model.Member).filter(
+                model.Member.capacity != 'organization',
+                model.Member.group_id == organization.id,
+                model.Member.state == 'active',
+                model.Member.table_name == 'package',
+                ):
+            package = model.Session.query(model.Package).get(member.table_id)
+            if package is None:
+                log.warning(u"Purging member of organization {} with capacity {}, whose package doesn't exist".format(
+                    organization.name, member.capacity))
+                member.purge()
+            else:
+                log.warning(u'Repairing capacity organization "{}" package "{}" membership'.format(organization.name, package))
+                member.capacity = 'organization'
+
+    member_by_table_id_by_group_id = {}
+    for member in model.Session.query(model.Member).filter(
+            model.Member.state == 'active',
+            ):
+        member_by_table_id = member_by_table_id_by_group_id.setdefault(member.group_id, {})
+        if member.table_id in member_by_table_id:
+            log.warning(u"Group {} contains several time the same object:\n  {}\n {}".format(member.group.name,
+                member_by_table_id[member.table_id], member))
+            member.purge()
+            continue
+        member_by_table_id[member.table_id] = member
+
     model.repo.commit_and_remove()
 
     return 0
