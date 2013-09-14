@@ -76,6 +76,31 @@ def main():
 
     plugins.load('synchronous_search')
 
+    # Purge groups & organizations.
+    bad_groups_name = []
+    while True:
+        revision = model.repo.new_revision()
+
+        group = model.Session.query(model.Group).filter(
+            model.Group.state == 'deleted',
+            sa.not_(model.Group.name.in_(bad_groups_name)) if bad_groups_name else None,
+            ).first()
+        if group is None:
+            break
+
+        name = group.name
+        title = group.title
+
+        group.purge()
+        log.info(u'Purged group {} - {}'.format(name, title))
+
+        try:
+            model.repo.commit_and_remove()
+        except sqlalchemy.exc.IntegrityError:
+            log.exception(u'An integrity error while purging {} - {}'.format(name, title))
+            bad_groups_name.append(name)
+
+    # Purge packages.
     bad_packages_name = []
     while True:
         revision = model.repo.new_revision()
@@ -110,6 +135,7 @@ def main():
             log.exception(u'An integrity error while purging {} - {}'.format(name, title))
             bad_packages_name.append(name)
 
+    # Purge resources.
     bad_resources_id = []
     while True:
         revision = model.repo.new_revision()
