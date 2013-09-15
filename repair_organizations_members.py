@@ -88,7 +88,7 @@ def main():
             continue
         assert organization is not None
         assert organization.is_organization
-        assert organization.state != 'deleted'
+        assert organization.state != 'deleted', str((organization, package))
         member = model.Session.query(model.Member).filter(
             model.Member.group_id == organization.id,
             model.Member.state == 'active',
