@@ -158,6 +158,16 @@ def main():
             log.exception(u'An integrity error while purging {} - {}'.format(id, name))
             bad_resources_id.append(id)
 
+    # Delete unused tags.
+    for tag in model.Session.query(model.Tag):
+        package_tag = model.Session.query(model.PackageTag).filter(
+            model.PackageTag.tag_id == tag.id,
+            ).first()
+        if package_tag is None:
+            model.Session.delete(tag)
+            log.info(u'Deleted unused tag {}'.format(tag.name))
+    model.Session.commit()
+
     return 0
 
 
