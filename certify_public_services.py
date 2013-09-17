@@ -38,9 +38,6 @@ from ckanext.etalab import model as etalab_model
 from paste.deploy import appconfig
 from paste.registry import Registry
 import pylons
-import sqlalchemy as sa
-import sqlalchemy.exc
-from sqlalchemy import sql
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -125,7 +122,7 @@ def main():
 
     plugins.load('synchronous_search')
 
-    revision = model.repo.new_revision()
+    model.repo.new_revision()
 
     for organization_name in public_services_name:
         organization = model.Session.query(model.Group).filter(

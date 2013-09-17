@@ -39,7 +39,6 @@ from paste.registry import Registry
 import pylons
 import sqlalchemy as sa
 import sqlalchemy.exc
-from sqlalchemy import sql
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -79,7 +78,7 @@ def main():
     # Purge groups & organizations.
     bad_groups_name = []
     while True:
-        revision = model.repo.new_revision()
+        model.repo.new_revision()
 
         group = model.Session.query(model.Group).filter(
             model.Group.state == 'deleted',
@@ -103,7 +102,7 @@ def main():
     # Purge packages.
     bad_packages_name = []
     while True:
-        revision = model.repo.new_revision()
+        model.repo.new_revision()
 
         package = model.Session.query(model.Package).filter(
             model.Package.state == 'deleted',
@@ -138,7 +137,7 @@ def main():
     # Purge resources.
     bad_resources_id = []
     while True:
-        revision = model.repo.new_revision()
+        model.repo.new_revision()
 
         resource = model.Session.query(model.Resource).filter(
             model.Resource.state == 'deleted',

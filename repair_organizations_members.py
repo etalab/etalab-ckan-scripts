@@ -37,8 +37,6 @@ from ckan.config.environment import load_environment
 from paste.deploy import appconfig
 from paste.registry import Registry
 import pylons
-import sqlalchemy as sa
-#import sqlalchemy.exc
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -75,7 +73,7 @@ def main():
 
     plugins.load('synchronous_search')
 
-    revision = model.repo.new_revision()
+    model.repo.new_revision()
 
     for package in model.Session.query(model.Package).filter(
             model.Package.owner_org != None,
