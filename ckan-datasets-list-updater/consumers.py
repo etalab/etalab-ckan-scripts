@@ -4,7 +4,7 @@
 # Etalab-CKAN-Scripts -- Various scripts that handle Etalab datasets in CKAN repository
 # By: Emmanuel Raviart <emmanuel@raviart.com>
 #
-# Copyright (C) 2013 Emmanuel Raviart
+# Copyright (C) 2013 Etalab
 # http://github.com/etalab/etalab-ckan-scripts
 #
 # This file is part of Etalab-CKAN-Scripts.
