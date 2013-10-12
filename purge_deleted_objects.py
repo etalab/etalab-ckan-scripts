@@ -34,6 +34,7 @@ import sys
 
 from ckan import model, plugins
 from ckan.config.environment import load_environment
+from ckanext.etalab import model as etalab_model
 from paste.deploy import appconfig
 from paste.registry import Registry
 import pylons
@@ -90,6 +91,9 @@ def main():
         name = group.name
         title = group.title
 
+        model.Session.query(etalab_model.CertifiedPublicService).filter(
+            etalab_model.CertifiedPublicService.organization_id == group.id,
+            ).delete()
         group.purge()
         log.info(u'Purged group {} - {}'.format(name, title))
 
