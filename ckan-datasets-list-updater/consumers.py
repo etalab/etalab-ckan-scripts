@@ -289,10 +289,8 @@ class CkanDatasetsListUpdater(fedmsg.consumers.FedmsgConsumer):
                     dict(id = 'revision_timestamp', type = 'timestamp'),
                     dict(id = 'state', type = 'text'),
                     dict(id = 'tags', type = 'json'),
-    #                dict(id = 'temporal_coverage_from', type = 'date'),
-                    dict(id = 'temporal_coverage_from', type = 'text'),
-    #                dict(id = 'temporal_coverage_to', type = 'date'),
-                    dict(id = 'temporal_coverage_to', type = 'text'),
+                    dict(id = 'temporal_coverage_from', type = 'text'),  # not a "date", because it can be just a year
+                    dict(id = 'temporal_coverage_to', type = 'text'),  # not a "date", because it can be just a year
                     dict(id = 'territorial_coverage', type = 'text'),
                     dict(id = 'territorial_coverage_granularity', type = 'text'),
                     dict(id = 'title', type = 'text'),
