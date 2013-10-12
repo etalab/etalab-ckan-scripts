@@ -127,11 +127,8 @@ def main():
                 key = u"Date de production des données",
                 value = datetime.date.today().isoformat(),
                 ),
-            dict(
-                key = u"Fréquence de mise à jour",
-                value = u'quotidienne',
-                ),
             ],
+        frequency = u'temps réel',
         groups = [
             dict(id = strings.slugify(u'État et collectivités')),
             ],

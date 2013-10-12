@@ -120,11 +120,8 @@ class CkanDatasetsListUpdater(fedmsg.consumers.FedmsgConsumer):
                     key = u"Date de production des données",
                     value = datetime.date.today().isoformat(),
                     ),
-                dict(
-                    key = u"Fréquence de mise à jour",
-                    value = u'temps-reel',
-                    ),
                 ],
+            frequency = u'temps réel',
             groups = [
                 dict(id = strings.slugify(u'État et collectivités')),
                 ],
