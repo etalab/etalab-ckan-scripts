@@ -136,7 +136,6 @@ def main():
         if organization.certified_public_service is None:
             log.info(u'Certifying "{}" as public service'.format(organization_name))
             certified_public_service = etalab_model.CertifiedPublicService()
-            certified_public_service = etalab_model.CertifiedPublicService()
             certified_public_service.organization_id = organization.id
             model.Session.add(certified_public_service)
 
