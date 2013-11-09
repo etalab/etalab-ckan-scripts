@@ -86,6 +86,7 @@ public_services_name = (
     u'office-national-de-l-eau-et-des-milieux-aquatiques',
     u'office-national-des-forets',
     u'premier-ministre',
+    u'pse-ecole-d-economie-de-paris',
     u'regie-autonome-des-transports-parisiens-ratp',
     u'reseau-ferre-de-france',
     u'societe-nationale-des-chemins-de-fer-francais',
