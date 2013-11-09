@@ -110,6 +110,7 @@ def main():
             continue
         package = package_extra.package
         if package.private or package.state != 'active':
+            log.warning(u'Territorial coverage of package {} must be manually corrected'.format(package.name))
             continue
         package_extra.value = kind_code_name
 
