@@ -28,13 +28,9 @@
 
 
 import argparse
-import json
 import logging
 import os
 import sys
-import urllib
-import urllib2
-import urlparse
 
 from ckan import model, plugins
 from ckan.config.environment import load_environment
@@ -63,7 +59,6 @@ class MockTranslator(object):
 def main():
     parser = argparse.ArgumentParser(description = __doc__)
     parser.add_argument('config', help = 'path of configuration file')
-    parser.add_argument('-t', '--territoria-url', help = 'Territoria URL', required = True)
     parser.add_argument('-v', '--verbose', action = 'store_true', help = 'increase output verbosity')
 
     args = parser.parse_args()
@@ -80,7 +75,6 @@ def main():
 
     model.repo.new_revision()
 
-    kind_code_name_by_kind_code = {}
     for package_extra in model.Session.query(model.PackageExtra).filter(
             model.PackageExtra.key == 'territorial_coverage_granularity',
             model.PackageExtra.value == 'france',
