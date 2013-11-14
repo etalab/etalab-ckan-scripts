@@ -87,7 +87,7 @@ is_public_service_by_organization_name = {
     u'comite-regional-de-tourisme': False,
     u'commission-nationale-consultative-des-droits-de-l-homme': True,
     u'communaute-du-pays-d-aix': True,
-    u'communaute-urbaine-de-bordeaux': False,
+    u'communaute-urbaine-de-bordeaux': True,
     u'commune-de-brocas-landes': False,
     u'commune-de-saint-andre-de-cubzac': False,
     u'conseil-general-de-l-oise': True,
