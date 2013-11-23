@@ -33,7 +33,7 @@ import os
 import sys
 
 from ckan import model, plugins
-if not hasattr(model, PackageRelationshipRevision):
+if not hasattr(model, 'PackageRelationshipRevision'):
     # Monkey patch: Add missing class to model.
     from ckan.model import package_relationship
     model.PackageRelationshipRevision = package_relationship.PackageRelationshipRevision
