@@ -129,6 +129,18 @@ def main():
                     ):
                 model.Session.delete(resource_revision)
 
+        # Delete package_relationship_revision before purging package, to avoid IntegrityError: update or
+        # delete on table "package" violates foreign key constraint
+        # "package_relationship_revision_subject_package_id_fkey" on table "package_relationship_revision".
+        for package_relationship_revision in model.Session.query(model.PackageRelationshipRevision).filter(
+                model.PackageRelationshipRevision.subject_package_id == package.id,
+                ):
+            model.Session.delete(package_relationship_revision)
+        for package_relationship_revision in model.Session.query(model.PackageRelationshipRevision).filter(
+                model.PackageRelationshipRevision.object_package_id == package.id,
+                ):
+            model.Session.delete(package_relationship_revision)
+
         package.purge()
         log.info(u'Purged package {} - {}'.format(name, title))
 
