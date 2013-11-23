@@ -33,6 +33,10 @@ import os
 import sys
 
 from ckan import model, plugins
+if not hasattr(ckan.model, PackageRelationshipRevision):
+    # Monkey patch: Add missing class to model.
+    from ckan.model import package_relationship
+    ckan.model.PackageRelationshipRevision = package_relationship.PackageRelationshipRevision
 from ckan.config.environment import load_environment
 from ckanext.etalab import model as etalab_model
 from paste.deploy import appconfig
