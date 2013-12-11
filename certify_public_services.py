@@ -177,7 +177,7 @@ is_public_service_by_organization_name = {
     u'open-data-alsace': False,
     u'open-data-hauts-de-seine': False,
     u'open-data-nord-pas-de-calais': False,
-    u'open_paca': True,
+    u'open-paca': True,
     u'openclassrooms': False,
     u'opendatasoft': False,
     u'orga': False,
