@@ -86,6 +86,7 @@ is_public_service_by_organization_name = {
     u'comite-departemental-du-tourisme': False,
     u'comite-regional-de-tourisme': False,
     u'commission-nationale-consultative-des-droits-de-l-homme': True,
+    u'commission-nationale-des-comptes-de-campagne-et-des-financements-politiques-cnccfp': True,
     u'communaute-du-pays-d-aix': True,
     u'communaute-urbaine-de-bordeaux': True,
     u'commune-de-brocas-landes': False,
