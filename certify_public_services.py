@@ -71,7 +71,7 @@ is_public_service_by_organization_name = {
     u'banque-mondiale': False,
     u'bassin-adour-garonne': False,
     u'bibliotheque-nationale-de-france': True,
-    u'bouches-du-rhone-tourisme': False,
+    u'bouches-du-rhone-tourisme': True,
     u'caisse-nationale-de-l-assurance-maladie-des-travailleurs-salaries': True,
     u'caisse-nationale-de-solidarite-pour-l-autonomie': False,
     u'cap-digital': False,
