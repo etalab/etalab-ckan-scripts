@@ -102,7 +102,7 @@ is_public_service_by_organization_name = {
     u'conseil-superieur-de-l-audiovisuel': True,
     u'contribuables-associes': False,
     u'cooperation-pour-l-information-geographique-en-alsace-cigal': False,
-    u'coulommiers': False,
+    u'coulommiers': True,
     u'crige-paca': False,
     u'croix-rouge-francaise': False,
     u'data-publica': False,
