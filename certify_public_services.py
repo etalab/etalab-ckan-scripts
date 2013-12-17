@@ -170,7 +170,7 @@ is_public_service_by_organization_name = {
     u'nosdonnees-fr': False,
     u'observatoire-francais-des-drogues-et-des-toxicomanies': True,
     u'office-national-d-information-sur-les-enseignements-et-les-professions': True,
-    u'office-national-de-l-eau-et-des-milieux-aquatiques': True,
+    u'office-national-de-l-eau-et-des-milieux-aquatiques-onema': True,
     u'office-national-des-forets': True,
     u'oise-open-data': False,
     u'open-data-71': False,
