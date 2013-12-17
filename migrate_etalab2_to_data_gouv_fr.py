@@ -73,27 +73,34 @@ def main():
 
     plugins.load('synchronous_search')
 
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('%etalab2.fr%'),
-            ):
-        url = resource.url
-        if url.startswith('http://ckan.etalab2.fr/'):
-            resource.url = resource.url.replace('http://ckan.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
-        elif url.startswith('http://ckan-hetic.etalab2.fr/'):
-            resource.url = resource.url.replace('http://ckan-hetic.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
-        elif url.startswith('http://www.etalab2.fr/'):
-            resource.url = resource.url.replace('http://www.etalab2.fr/', 'http://www.data.gouv.fr/')
-        else:
-            print resource.url
-    model.repo.commit_and_remove()
+#    model.repo.new_revision()
+#    for resource in model.Session.query(model.Resource).filter(
+#            model.Resource.url.like('%etalab2.fr%'),
+#            ):
+#        url = resource.url
+#        if url.startswith('http://ckan.etalab2.fr/'):
+#            resource.url = resource.url.replace('http://ckan.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
+#        elif url.startswith('http://ckan-hetic.etalab2.fr/'):
+#            resource.url = resource.url.replace('http://ckan-hetic.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
+#        elif url.startswith('http://www.etalab2.fr/'):
+#            resource.url = resource.url.replace('http://www.etalab2.fr/', 'http://www.data.gouv.fr/')
+#        else:
+#            print resource.url
+#    model.repo.commit_and_remove()
+
+#    model.repo.new_revision()
+#    for resource in model.Session.query(model.Resource).filter(
+#            model.Resource.url.like('%www.data.gouv.fr%'),
+#            ):
+#        if resource.url.startswith('http://www.data.gouv.fr/') and not resource.url.startswith('http://www.data.gouv.fr/var'):
+#            resource.url = resource.url.replace('http://www.data.gouv.fr/', 'http://new.data.gouv.fr/')
+#    model.repo.commit_and_remove()
 
     model.repo.new_revision()
     for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('%www.data.gouv.fr%'),
+            model.Resource.url.like('http://new.data.gouv.fr/var/%'),
             ):
-        if resource.url.startswith('http://www.data.gouv.fr/'):
-            resource.url = resource.url.replace('http://www.data.gouv.fr/', 'http://new.data.gouv.fr/')
+        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
     model.repo.commit_and_remove()
 
     return 0
