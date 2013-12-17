@@ -86,8 +86,13 @@ def main():
             resource.url = resource.url.replace('http://www.etalab2.fr/', 'http://www.data.gouv.fr/')
         else:
             print resource.url
+    model.repo.commit_and_remove()
 
-        if url.startswith('http://www.data.gouv.fr/'):
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('%etalab2.fr%'),
+            ):
+        if resource.url.startswith('http://www.data.gouv.fr/'):
             resource.url = resource.url.replace('http://www.data.gouv.fr/', 'http://new.data.gouv.fr/')
     model.repo.commit_and_remove()
 
