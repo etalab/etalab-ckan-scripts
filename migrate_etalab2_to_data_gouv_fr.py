@@ -42,7 +42,7 @@ import pylons
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
 log = logging.getLogger(app_name)
-pdf_url_re = re.compile(r'/[\da-f]+\.pdf$')
+pdf_url_re = re.compile(r'http://new\.data\.gouv\.fr/[\da-f]+\.pdf$')
 
 
 class MockTranslator(object):
