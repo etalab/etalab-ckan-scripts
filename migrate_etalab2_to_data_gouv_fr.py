@@ -121,6 +121,13 @@ def main():
 
     model.repo.new_revision()
     for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('http://new.data.gouv.fr/www/%'),
+            ):
+        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
+    model.repo.commit_and_remove()
+
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
             model.Resource.url.like('http://new.data.gouv.fr/%'),
             ):
         match = pdf_url_re.match(resource.url)
