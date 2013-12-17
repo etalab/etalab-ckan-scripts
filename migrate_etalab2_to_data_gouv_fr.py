@@ -81,7 +81,7 @@ def main():
         if url.startswith('http://ckan.etalab2.fr/'):
             resource.url = resource.url.replace('http://ckan.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
         elif url.startswith('http://ckan-hetic.etalab2.fr/'):
-            resource.url = resource.url.replace('http://ckan.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
+            resource.url = resource.url.replace('http://ckan-hetic.etalab2.fr/', 'http://www.data.gouv.fr/fr/')
         elif url.startswith('http://www.etalab2.fr/'):
             resource.url = resource.url.replace('http://www.etalab2.fr/', 'http://www.data.gouv.fr/')
         else:
