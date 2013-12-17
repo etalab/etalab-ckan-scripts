@@ -30,6 +30,7 @@
 import argparse
 import logging
 import os
+import re
 import sys
 
 from ckan import model, plugins
@@ -41,6 +42,7 @@ import pylons
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
 log = logging.getLogger(app_name)
+pdf_url_re = re.compile(r'/[\da-f]+\.pdf$')
 
 
 class MockTranslator(object):
@@ -98,9 +100,32 @@ def main():
 
     model.repo.new_revision()
     for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('http://new.data.gouv.fr/DataSet/%'),
+            ):
+        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
+    model.repo.commit_and_remove()
+
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
             model.Resource.url.like('http://new.data.gouv.fr/var/%'),
             ):
         resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
+    model.repo.commit_and_remove()
+
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('http://new.data.gouv.fr/upload/%'),
+            ):
+        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
+    model.repo.commit_and_remove()
+
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('http://new.data.gouv.fr/%'),
+            ):
+        match = pdf_url_re.match(resource.url)
+        if match is not None:
+            resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
     model.repo.commit_and_remove()
 
     return 0
