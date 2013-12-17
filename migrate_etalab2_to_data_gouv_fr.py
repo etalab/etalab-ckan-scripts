@@ -90,7 +90,7 @@ def main():
 
     model.repo.new_revision()
     for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('%etalab2.fr%'),
+            model.Resource.url.like('%www.data.gouv.fr%'),
             ):
         if resource.url.startswith('http://www.data.gouv.fr/'):
             resource.url = resource.url.replace('http://www.data.gouv.fr/', 'http://new.data.gouv.fr/')
