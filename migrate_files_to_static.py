@@ -95,6 +95,7 @@ def main():
         image_url = image_url.encode('utf-8')
         if image_url.startswith(('http://static.data.gouv.fr/', 'https://static.data.gouv.fr/')):
             continue
+        image_url_path = urlparse.urlsplit(image_url).path
         try:
             response = urllib2.urlopen(image_url)
         except urllib2.HTTPError:
@@ -103,7 +104,7 @@ def main():
             continue
         image_buffer = response.read()
         image_hash = hashlib.sha256(image_buffer).hexdigest()
-        image_url_path = '{}/{}{}'.format(image_hash[:2], image_hash[2:], os.path.splitext(image_url)[-1])
+        image_url_path = '{}/{}{}'.format(image_hash[:2], image_hash[2:], os.path.splitext(image_url_path)[-1])
         image_path = '/tmp/images/{}'.format(image_url_path)
         print image_path
         dir = os.path.dirname(image_path)
@@ -125,6 +126,7 @@ def main():
         image_url = image_url.encode('utf-8')
         if image_url.startswith(('http://static.data.gouv.fr/', 'https://static.data.gouv.fr/')):
             continue
+        image_url_path = urlparse.urlsplit(image_url).path
         try:
             response = urllib2.urlopen(image_url)
         except urllib2.HTTPError:
@@ -133,7 +135,7 @@ def main():
             continue
         image_buffer = response.read()
         image_hash = hashlib.sha256(image_buffer).hexdigest()
-        image_url_path = '{}/{}{}'.format(image_hash[:2], image_hash[2:], os.path.splitext(image_url)[-1])
+        image_url_path = '{}/{}{}'.format(image_hash[:2], image_hash[2:], os.path.splitext(image_url_path)[-1])
         image_path = '/tmp/images/{}'.format(image_url_path)
         print image_path
         dir = os.path.dirname(image_path)
