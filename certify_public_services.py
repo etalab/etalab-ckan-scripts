@@ -159,6 +159,7 @@ is_public_service_by_organization_name = {
     u'ministere-de-la-culture-et-de-la-communication': True,
     u'ministere-de-la-defense': True,
     u'ministere-de-la-justice': True,
+    u'ministere-de-la-reforme-de-l-etat-de-la-decentralisation-et-de-la-fonction-publique': True,
     u'ministere-des-affaires-etrangeres': True,
     u'ministere-des-affaires-sociales-et-de-la-sante': True,
     u'ministere-des-sports-de-la-jeunesse-de-l-education-populaire-et-de-la-vie-associative': True,
