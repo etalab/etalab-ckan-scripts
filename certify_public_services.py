@@ -220,6 +220,7 @@ is_public_service_by_organization_name = {
     u'ville-de-digne-les-bains': True,
     u'ville-de-marseille': False,
     u'ville-de-montpellier': True,
+    u'ville-de-nantes': True,
     u'ville-de-rennes': True,
     u'villemomble': False,
     u'wwf': False,
