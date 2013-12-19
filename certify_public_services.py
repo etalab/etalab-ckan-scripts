@@ -168,6 +168,7 @@ is_public_service_by_organization_name = {
     u'montpellier-territoire-numerique': False,
     u'musee-des-arts-asiatiques-guimet': True,
     u'musee-du-louvre': True,
+    u'nantes-metropole': True,
     u'nosdonnees-fr': False,
     u'observatoire-francais-des-drogues-et-des-toxicomanies': True,
     u'office-national-d-information-sur-les-enseignements-et-les-professions': True,
