@@ -197,7 +197,7 @@ is_public_service_by_organization_name = {
     u'region-provence-alpes-cote-d-azur-earthcase': False,
     u'region-provence-alpes-cote-d-azur-items': False,
     u'region-provence-alpes-cote-d-azur-mv2': False,
-    u'rennes-metropole': False,
+    u'rennes-metropole': True,
     u'reseau-ferre-de-france': True,
     u'reseau-sitra': False,
     u'resot-alsace': False,
