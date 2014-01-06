@@ -93,7 +93,6 @@ def main():
         for resource in model.Session.query(model.Resource).filter(
                 model.Resource.url.like('http://www.data.gouv.fr/%'),
                 ):
-            resources_found = True
             resource_url, error = conv.pipe(
                 conv.make_input_to_url(full = True),
                 conv.not_none,
@@ -112,6 +111,7 @@ def main():
             try:
                 response = urllib2.urlopen(resource_url, timeout = 30)
             except socket.timeout:
+                resources_found = True
                 continue
             except urllib2.HTTPError:
                 bad_resources_url.add(resource_url)
@@ -119,6 +119,7 @@ def main():
             except urllib2.URLError:
                 bad_resources_url.add(resource_url)
                 continue
+            resources_found = True
             resource_buffer = response.read()
             resource_hash = hashlib.sha256(resource_buffer).hexdigest()
             resource_url_path = '{}/{}{}'.format(resource_hash[:2], resource_hash[2:],
