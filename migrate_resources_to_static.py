@@ -34,6 +34,7 @@ import json
 import logging
 import os
 import re
+import socket
 import sys
 import urllib
 import urllib2
@@ -106,6 +107,8 @@ def main():
             print resource_url
             try:
                 response = urllib2.urlopen(resource_url, timeout = 30)
+            except socket.timeout:
+                continue
             except urllib2.HTTPError:
                 continue
             except urllib2.URLError:
