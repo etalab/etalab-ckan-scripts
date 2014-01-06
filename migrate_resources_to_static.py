@@ -85,12 +85,14 @@ def main():
 
     plugins.load('synchronous_search')
 
+    bad_resources_url = set()
     while True:
         model.repo.new_revision()
         resources_found = False
+        resource_index = 0
         for resource in model.Session.query(model.Resource).filter(
                 model.Resource.url.like('http://www.data.gouv.fr/%'),
-                ).limit(5):
+                ):
             resources_found = True
             resource_url, error = conv.pipe(
                 conv.make_input_to_url(full = True),
@@ -103,6 +105,8 @@ def main():
                 continue
             if not resource_url.startswith(('http://www.data.gouv.fr/', 'https://www.data.gouv.fr/')):
                 continue
+            if resource_url in bad_resources_url:
+                continue
             resource_url_path = urlparse.urlsplit(resource_url).path
             print resource_url
             try:
@@ -110,8 +114,10 @@ def main():
             except socket.timeout:
                 continue
             except urllib2.HTTPError:
+                bad_resources_url.add(resource_url)
                 continue
             except urllib2.URLError:
+                bad_resources_url.add(resource_url)
                 continue
             resource_buffer = response.read()
             resource_hash = hashlib.sha256(resource_buffer).hexdigest()
@@ -126,6 +132,9 @@ def main():
                 resource_file.write(resource_buffer)
             if args.go:
                 resource.url = 'http://static.data.gouv.fr/{}'.format(resource_url_path)
+                resource_index += 1
+                if resource_index >= 5:
+                    break
         if resources_found:
             model.repo.commit_and_remove()
         else:
