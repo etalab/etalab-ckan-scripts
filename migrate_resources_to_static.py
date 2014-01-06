@@ -84,40 +84,49 @@ def main():
 
     plugins.load('synchronous_search')
 
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource):
-        resource_url, error = conv.pipe(
-            conv.make_input_to_url(full = True),
-            conv.not_none,
-            )(resource.url, state = conv.default_state)
-        if error is not None:
-            continue
-        resource_url = resource_url.encode('utf-8')
-        if resource_url.startswith(('http://static.data.gouv.fr/', 'https://static.data.gouv.fr/')):
-            continue
-        if not resource_url.startswith(('http://www.data.gouv.fr/', 'https://www.data.gouv.fr/')):
-            continue
-        resource_url_path = urlparse.urlsplit(resource_url).path
-        try:
-            response = urllib2.urlopen(resource_url, timeout = 30)
-        except urllib2.HTTPError:
-            continue
-        except urllib2.URLError:
-            continue
-        resource_buffer = response.read()
-        resource_hash = hashlib.sha256(resource_buffer).hexdigest()
-        resource_url_path = '{}/{}{}'.format(resource_hash[:2], resource_hash[2:],
-            os.path.splitext(resource_url_path)[-1])
-        resource_path = '/tmp/resources/{}'.format(resource_url_path)
-        print resource_url, resource_path
-        dir = os.path.dirname(resource_path)
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-        with open(resource_path, 'w') as resource_file:
-            resource_file.write(resource_buffer)
-        if args.go:
-            resource.url = 'http://static.data.gouv.fr/{}'.format(resource_url_path)
-    model.repo.commit_and_remove()
+    while True:
+        model.repo.new_revision()
+        resources_found = False
+        for resource in model.Session.query(model.Resource).filter(
+                model.Resource.url.like('http://www.data.gouv.fr/%'),
+                ).limit(5):
+            resources_found = True
+            resource_url, error = conv.pipe(
+                conv.make_input_to_url(full = True),
+                conv.not_none,
+                )(resource.url, state = conv.default_state)
+            if error is not None:
+                continue
+            resource_url = resource_url.encode('utf-8')
+            if resource_url.startswith(('http://static.data.gouv.fr/', 'https://static.data.gouv.fr/')):
+                continue
+            if not resource_url.startswith(('http://www.data.gouv.fr/', 'https://www.data.gouv.fr/')):
+                continue
+            resource_url_path = urlparse.urlsplit(resource_url).path
+            print resource_url
+            try:
+                response = urllib2.urlopen(resource_url, timeout = 30)
+            except urllib2.HTTPError:
+                continue
+            except urllib2.URLError:
+                continue
+            resource_buffer = response.read()
+            resource_hash = hashlib.sha256(resource_buffer).hexdigest()
+            resource_url_path = '{}/{}{}'.format(resource_hash[:2], resource_hash[2:],
+                os.path.splitext(resource_url_path)[-1])
+            resource_path = '/tmp/resources/{}'.format(resource_url_path)
+            print '   ', resource_path
+            dir = os.path.dirname(resource_path)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            with open(resource_path, 'w') as resource_file:
+                resource_file.write(resource_buffer)
+            if args.go:
+                resource.url = 'http://static.data.gouv.fr/{}'.format(resource_url_path)
+        if resources_found:
+            model.repo.commit_and_remove()
+        else:
+            break
 
     if not args.go:
         print 'WARNING: URLs have not been modified. Transfer images then use the --go option.'
