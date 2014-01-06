@@ -97,7 +97,7 @@ def main():
             continue
         image_url_path = urlparse.urlsplit(image_url).path
         try:
-            response = urllib2.urlopen(image_url)
+            response = urllib2.urlopen(image_url, timeout = 30)
         except urllib2.HTTPError:
             continue
         except urllib2.URLError:
@@ -128,7 +128,7 @@ def main():
             continue
         image_url_path = urlparse.urlsplit(image_url).path
         try:
-            response = urllib2.urlopen(image_url)
+            response = urllib2.urlopen(image_url, timeout = 30)
         except urllib2.HTTPError:
             continue
         except urllib2.URLError:
