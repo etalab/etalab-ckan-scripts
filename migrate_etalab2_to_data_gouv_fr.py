@@ -100,39 +100,16 @@ def main():
 
     model.repo.new_revision()
     for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('http://new.data.gouv.fr/DataSet/%'),
-            ):
-        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
-    model.repo.commit_and_remove()
-
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('http://new.data.gouv.fr/var/%'),
-            ):
-        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
-    model.repo.commit_and_remove()
-
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('http://new.data.gouv.fr/upload/%'),
-            ):
-        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
-    model.repo.commit_and_remove()
-
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource).filter(
-            model.Resource.url.like('http://new.data.gouv.fr/www/%'),
-            ):
-        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
-    model.repo.commit_and_remove()
-
-    model.repo.new_revision()
-    for resource in model.Session.query(model.Resource).filter(
             model.Resource.url.like('http://new.data.gouv.fr/%'),
             ):
-        match = pdf_url_re.match(resource.url)
-        if match is not None:
-            resource.url = resource.url.replace('http://new.data.gouv.fr/', 'http://www.data.gouv.fr/')
+        resource.url = resource.url.replace('http://new.data.gouv.fr/', 'https://www.data.gouv.fr/')
+    model.repo.commit_and_remove()
+
+    model.repo.new_revision()
+    for resource in model.Session.query(model.Resource).filter(
+            model.Resource.url.like('https://new.data.gouv.fr/%'),
+            ):
+        resource.url = resource.url.replace('https://new.data.gouv.fr/', 'https://www.data.gouv.fr/')
     model.repo.commit_and_remove()
 
     return 0
