@@ -97,6 +97,7 @@ is_public_service_by_organization_name = {
     u'conseil-general-de-loir-et-cher': True,
     u'conseil-general-de-saone-et-loire-cg71': True,
     u'conseil-general-des-hauts-de-seine': True,
+    u'conseil-general-des-landes': True,
     u'conseil-general-du-cantal': True,
     u'conseil-regional-d-aquitaine': True,
     u'conseil-regional-nord-pas-de-calais': True,
