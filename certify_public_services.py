@@ -126,7 +126,7 @@ is_public_service_by_organization_name = {
     u'frotsi': False,
     u'gip-corse-competences': False,
     u'gironde-numerique': False,
-    u'grand-lyon': False,
+    u'grand-lyon': True,
     u'haute-autorite-de-sante': True,
     u'haute-autorite-pour-la-diffusion-des-oeuvres-et-la-protection-des-droits-sur-internet-hadopi': True,
     u'iau-idf': False,
