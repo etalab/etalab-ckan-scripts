@@ -147,6 +147,7 @@ is_public_service_by_organization_name = {
     u'le-rif': False,
     u'longjumeau': False,
     u'mairie-de-paris': True,
+    u'mairie-des-lilas': True,
     u'marseille-provence-2013': False,
     u'marseille-provence-metropole': False,
     u'meteo-france': True,
