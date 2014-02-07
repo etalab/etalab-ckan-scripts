@@ -195,7 +195,7 @@ is_public_service_by_organization_name = {
     u'regie-autonome-des-transports-parisiens-ratp': True,
     u'regie-culturelle-regionale': False,
     u'region-alsace': True,
-    u'region-ile-de-france': False,
+    u'region-ile-de-france': True,
     u'region-provence-alpes-cote-d-azur': True,
     u'region-provence-alpes-cote-d-azur-earthcase': False,
     u'region-provence-alpes-cote-d-azur-items': False,
