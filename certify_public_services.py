@@ -206,7 +206,7 @@ is_public_service_by_organization_name = {
     u'resot-alsace': False,
     u'ressourcerie-datalocale': False,
     u'saint-maur-des-fosses': False,
-    u'saint-quentin-aisne': False,
+    u'saint-quentin-aisne': True,
     u'san-ouest-provence': False,
     u'sarlat-la-caneda': False,
     u'shom': True,
