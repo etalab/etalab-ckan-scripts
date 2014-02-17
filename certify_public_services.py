@@ -220,6 +220,7 @@ is_public_service_by_organization_name = {
     u'var-tourisme': False,
     u'ville-d-aix-en-provence': True,
     u'ville-d-arles-commune-de-saint-martin-de-crau-accm': False,
+    u'ville-d-issy-les-moulineaux': True,
     u'ville-de-digne-les-bains': True,
     u'ville-de-marseille': False,
     u'ville-de-montpellier': True,
