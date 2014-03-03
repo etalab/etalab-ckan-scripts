@@ -107,6 +107,7 @@ is_public_service_by_organization_name = {
     u'coulommiers': True,
     u'crige-paca': False,
     u'croix-rouge-francaise': False,
+    u'data-gouv-fr': True,
     u'data-publica': False,
     u'dataveyes': False,
     u'departement-de-l-information-et-de-la-communication': False,
