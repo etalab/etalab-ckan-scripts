@@ -119,6 +119,7 @@ is_public_service_by_organization_name = {
     u'etablissement-public-de-la-reunion-des-musees-nationaux-et-du-grand-palais-des-champs-elysees': True,
     u'etablissement-public-du-chateau-du-musee-et-du-domaine-national-de-versailles': True,
     u'etablissement-public-du-musee-d-orsay-et-du-musee-de-l-orangerie': True,
+    u'etalab': True,
     u'eurostat': False,
     u'fabrique-spinoza': False,
     u'federation-des-laboureurs-en-herbe': False,
