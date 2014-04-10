@@ -111,6 +111,7 @@ is_public_service_by_organization_name = {
     u'data-publica': False,
     u'dataveyes': False,
     u'departement-de-l-information-et-de-la-communication': False,
+    u'direction-departementale-des-territoires-du-haut-rhin-68': True,
     u'driea-sit-del-2': False,
     u'easter-eggs': False,
     u'ecole-nationale-superieure-d-art-villa-arson-de-nice': True,
