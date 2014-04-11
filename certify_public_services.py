@@ -84,6 +84,7 @@ is_public_service_by_organization_name = {
     u'cite-de-la-musique': True,
     u'comite-departemental-du-tourisme': False,
     u'comite-regional-de-tourisme': False,
+    u'commission-d-acces-aux-documents-administratifs-cada': True,
     u'commission-nationale-consultative-des-droits-de-l-homme': True,
     u'commission-nationale-des-comptes-de-campagne-et-des-financements-politiques-cnccfp': True,
     u'communaute-du-pays-d-aix': True,
