@@ -59,6 +59,7 @@ is_public_service_by_organization_name = {
     u'airaq': False,
     u'airpaca': False,
     u'aquitaine-europe-communication': False,
+    u'agence-nationale-d-appui-a-la-performance-des-etablissements-de-sante-et-medico-sociaux-anap': True,
     u'arcade': False,
     u'arles-crau-camargue-montagnette': False,
     u'arts-vivants-en-ille-et-vilaine': False,
