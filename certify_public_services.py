@@ -194,6 +194,7 @@ is_public_service_by_organization_name = {
     u'opendatasoft': False,
     u'orga': False,
     u'ouest-france': False,
+    u'parlement-europeen',
     u'pays-d-aubagne-et-de-l-etoile': False,
     u'pod-product-open-data': False,
     u'pole-metier-eau-environnement-crige-paca': False,
