@@ -83,6 +83,7 @@ is_public_service_by_organization_name = {
     u'centre-national-du-cinema-et-de-l-image-animee': True,
     u'chambre-de-commerce-et-d-industrie-marseille-provence': False,
     u'cite-de-la-musique': True,
+    u'collectivite-territoriale-de-corse': True,
     u'comite-departemental-du-tourisme': False,
     u'comite-regional-de-tourisme': False,
     u'commission-d-acces-aux-documents-administratifs-cada': True,
