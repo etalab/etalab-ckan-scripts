@@ -157,7 +157,7 @@ is_public_service_by_organization_name = {
     u'mairie-de-paris': True,
     u'mairie-des-lilas': True,
     u'marseille-provence-2013': False,
-    u'marseille-provence-metropole': False,
+    u'marseille-provence-metropole': True,
     u'meteo-france': True,
     u'metropole-nice-cote-d-azur': False,
     u'ministere-de-l-agriculture-de-l-agroalimentaire-et-de-la-foret': True,
