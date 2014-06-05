@@ -232,7 +232,7 @@ is_public_service_by_organization_name = {
     u'ville-d-arles-commune-de-saint-martin-de-crau-accm': False,
     u'ville-d-issy-les-moulineaux': True,
     u'ville-de-digne-les-bains': True,
-    u'ville-de-marseille': False,
+    u'ville-de-marseille': True,
     u'ville-de-montpellier': True,
     u'ville-de-nantes': True,
     u'ville-de-rennes': True,
