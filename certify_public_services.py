@@ -146,6 +146,7 @@ is_public_service_by_organization_name = {
     u'institut-national-de-la-statistique-et-des-etudes-economiques-insee': True,
     u'institut-national-de-recherches-archeologiques-preventives': True,
     u'institut-national-des-hautes-etudes-de-la-securite-et-de-la-justice': True,
+    u'institut-de-radioprotection-et-de-surete-nucleaire-irsn': True,
     u'institut-de-recherche-et-documentation-en-economie-de-la-sante-irdes': True,
     u'jcdecaux-developer': False,
     u'kel-quartier': False,
