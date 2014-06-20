@@ -221,6 +221,7 @@ is_public_service_by_organization_name = {
     u'san-ouest-provence': False,
     u'sarlat-la-caneda': False,
     u'secretariat-general': False,
+    u'senat': True,
     u'shom': True,
     u'sncf': True,
     u'societe-du-grand-paris': False,
