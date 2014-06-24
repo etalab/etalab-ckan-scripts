@@ -50,6 +50,7 @@ is_public_service_by_organization_name = {
     u'agence-de-l-eau-rhone-mediterranee-et-corse': False,
     u'agence-des-espaces-verts-idf': False,
     u'agence-nationale-de-securite-sanitaire-de-l-alimentation-de-l-environnement-et-du-travail-anses': True,
+    u'agence-nationale-pour-l-amelioration-des-conditions-de-travail': True,
     u'agence-nationale-pour-la-cohesion-sociale-et-l-egalite-des-chances': True,
     u'agence-nationale-pour-la-renovation-urbaine': True,
     u'agence-pour-l-enseignement-francais-a-l-etranger': True,
