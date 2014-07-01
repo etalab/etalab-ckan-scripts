@@ -158,6 +158,7 @@ is_public_service_by_organization_name = {
     u'le-rif': False,
     u'longjumeau': False,
     u'mairie-de-louviers': True,
+    u'mairie-de-monacia-d-aullene': True,
     u'mairie-de-paris': True,
     u'mairie-des-lilas': True,
     u'marseille-provence-2013': False,
