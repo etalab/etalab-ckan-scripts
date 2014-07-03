@@ -227,7 +227,7 @@ is_public_service_by_organization_name = {
     u'senat': True,
     u'shom': True,
     u'sncf': True,
-    u'societe-du-grand-paris': False,
+    u'societe-du-grand-paris': True,
     u'syndicat-mixte-des-transports-des-bouches-du-rhone': False,
     u'syndicat-mixte-du-pays-d-arles': False,
     u'systeme-d-information-sur-l-eau': False,
