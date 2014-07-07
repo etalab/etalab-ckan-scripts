@@ -137,7 +137,7 @@ is_public_service_by_organization_name = {
     u'gironde-numerique': False,
     u'grand-lyon': True,
     u'haute-autorite-de-sante': True,
-    u'haute-autorite-pour-la-transparence-de-la-vie-publique': True, 
+    u'haute-autorite-pour-la-transparence-de-la-vie-publique': True,
     u'haute-autorite-pour-la-diffusion-des-oeuvres-et-la-protection-des-droits-sur-internet-hadopi': True,
     u'iau-idf': False,
     u'ijba': False,
@@ -241,6 +241,7 @@ is_public_service_by_organization_name = {
     u'ville-de-montpellier': True,
     u'ville-de-nantes': True,
     u'ville-de-rennes': True,
+    u'ville-de-saint-malo': True,
     u'villemomble': False,
     u'wwf': False,
     }
