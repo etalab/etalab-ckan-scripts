@@ -140,7 +140,7 @@ is_public_service_by_organization_name = {
     u'haute-autorite-de-sante': True,
     u'haute-autorite-pour-la-transparence-de-la-vie-publique': True,
     u'haute-autorite-pour-la-diffusion-des-oeuvres-et-la-protection-des-droits-sur-internet-hadopi': True,
-    u'iau-idf': False,
+    u'iau-idf': True,
     u'ijba': False,
     u'ined': True,
     u'institut-francais-du-cheval-et-de-l-equitation': True,
