@@ -81,6 +81,7 @@ is_public_service_by_organization_name = {
     u'cci-territoire-de-montpellier': False,
     u'centre-des-monuments-nationaux': True,
     u'centre-national-d-art-et-de-culture-georges-pompidou': True,
+    u'cengeps-centre-national-de-gestion-des-essais-de-produits-de-sante': True,
     u'centre-national-du-cinema-et-de-l-image-animee': True,
     u'chambre-de-commerce-et-d-industrie-marseille-provence': False,
     u'cite-de-la-musique': True,
