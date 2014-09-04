@@ -167,6 +167,7 @@ is_public_service_by_organization_name = {
     u'marseille-provence-metropole': True,
     u'meteo-france': True,
     u'metropole-nice-cote-d-azur': False,
+    u'metz-metropole': True,
     u'ministere-de-l-agriculture-de-l-agroalimentaire-et-de-la-foret': True,
     u'ministere-de-l-ecologie-du-developpement-durable-et-de-l-energie': True,
     u'ministere-de-l-economie-et-des-finances': True,
