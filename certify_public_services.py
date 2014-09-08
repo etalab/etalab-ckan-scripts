@@ -98,6 +98,7 @@ is_public_service_by_organization_name = {
     u'commune-de-brocas-landes': False,
     u'commune-de-saint-andre-de-cubzac': False,
     u'cour-des-comptes': True,
+    u'conseil-constitutionnel': True,
     u'conseil-general-de-l-oise': True,
     u'conseil-general-de-la-gironde': True,
     u'conseil-general-de-la-manche': True,
